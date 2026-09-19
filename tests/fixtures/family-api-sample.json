@@ -1,0 +1,110 @@
+{
+  "_comment": "离线夹具：形状与 src/payload.js 的 buildFamilyPayload() 输出一致（成员/归属用原始 steamid）。给 tools/family-report.js --from 和 tests/static-report.test.js 用。价格字段按 src/payload.js 的 toGamePriceFields 形状给，price = 折扣价、originalPrice = 标价。",
+  "generatedAt": "2000-01-01T00:00:00.000Z",
+  "familyGroupId": "FIXTURE-GROUP",
+  "members": [
+    { "steamid": "76561190000000001", "name": "阿肯", "avatar": "" },
+    { "steamid": "76561190000000002", "name": "老王", "avatar": "" },
+    { "steamid": "76561190000000003", "name": "小林", "avatar": "" },
+    { "steamid": "76561190000000004", "name": "Momo", "avatar": "" },
+    { "steamid": "76561190000000005", "name": "阿七", "avatar": "" },
+    { "steamid": "76561190000000006", "name": "大熊", "avatar": "" }
+  ],
+  "games": [
+    {
+      "appid": 2358720, "name": "黑神话：悟空", "nameEn": "Black Myth: Wukong",
+      "ownerSteamIds": ["76561190000000001"], "ownerCount": 1, "playtimeForever": 45000,
+      "playedBy": ["76561190000000002", "76561190000000003"],
+      "playtime": { "76561190000000002": 45000, "76561190000000003": 2700 },
+      "price": 268, "originalPrice": 358, "currentPrice": 268, "rawOriginal": 358,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 25,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "Black Myth: Wukong", "storeUrlPath": "/app/2358720"
+    },
+    {
+      "appid": 1245620, "name": "艾尔登法环", "nameEn": "ELDEN RING",
+      "ownerSteamIds": ["76561190000000001", "76561190000000002"], "ownerCount": 2, "playtimeForever": 0,
+      "playedBy": ["76561190000000003"],
+      "playtime": { "76561190000000003": 11520 },
+      "price": 298, "originalPrice": 398, "currentPrice": 298, "rawOriginal": 398,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 25,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "ELDEN RING", "storeUrlPath": "/app/1245620"
+    },
+    {
+      "appid": 1091500, "name": "赛博朋克 2077", "nameEn": "Cyberpunk 2077",
+      "ownerSteamIds": ["76561190000000003"], "ownerCount": 1, "playtimeForever": 0,
+      "playedBy": [], "playtime": {},
+      "price": 298, "originalPrice": 298, "currentPrice": 298, "rawOriginal": 298,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "Cyberpunk 2077", "storeUrlPath": "/app/1091500"
+    },
+    {
+      "appid": 292030, "name": "巫师 3：狂猎", "nameEn": "The Witcher 3: Wild Hunt",
+      "ownerSteamIds": [
+        "76561190000000001", "76561190000000002", "76561190000000003",
+        "76561190000000004", "76561190000000005", "76561190000000006"
+      ],
+      "ownerCount": 6, "playtimeForever": 0,
+      "playedBy": ["76561190000000004"], "playtime": { "76561190000000004": 3600 },
+      "price": 199, "originalPrice": 199, "currentPrice": 199, "rawOriginal": 199,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "The Witcher 3", "storeUrlPath": "/app/292030"
+    },
+    {
+      "appid": 730, "name": "反恐精英 2", "nameEn": "Counter-Strike 2",
+      "ownerSteamIds": ["76561190000000004"], "ownerCount": 1, "playtimeForever": 0,
+      "playedBy": ["76561190000000005"], "playtime": { "76561190000000005": 3600 },
+      "price": 0, "originalPrice": 0, "currentPrice": 0, "rawOriginal": 0,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "free", "isFree": true,
+      "packageName": "Counter-Strike 2", "storeUrlPath": "/app/730"
+    },
+    {
+      "appid": 1174180, "name": "荒野大镖客 2", "nameEn": "Red Dead Redemption 2",
+      "ownerSteamIds": ["76561190000000005"], "ownerCount": 1, "playtimeForever": 0,
+      "playedBy": ["76561190000000006"], "playtime": { "76561190000000006": 7200 },
+      "price": 279, "originalPrice": 279, "currentPrice": 279, "rawOriginal": 279,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": false, "priceState": "priced", "isFree": false,
+      "packageName": "Red Dead Redemption 2", "storeUrlPath": "/app/1174180"
+    },
+    {
+      "appid": 289070, "name": "文明 6", "nameEn": "Sid Meier's Civilization VI",
+      "ownerSteamIds": ["76561190000000001", "76561190000000002", "76561190000000003"],
+      "ownerCount": 3, "playtimeForever": 0,
+      "playedBy": ["76561190000000004", "76561190000000005", "76561190000000006"],
+      "playtime": {
+        "76561190000000004": 108000, "76561190000000005": 7200, "76561190000000006": 600
+      },
+      "price": 220, "originalPrice": 220, "currentPrice": 220, "rawOriginal": 220,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "Civilization VI", "storeUrlPath": "/app/289070"
+    },
+    {
+      "appid": 413150, "name": "星露谷物语", "nameEn": "Stardew Valley",
+      "ownerSteamIds": ["76561190000000004", "76561190000000005"], "ownerCount": 2, "playtimeForever": 0,
+      "playedBy": ["76561190000000001", "76561190000000006"],
+      "playtime": { "76561190000000001": 18000, "76561190000000006": 5400 },
+      "price": 48, "originalPrice": 48, "currentPrice": 48, "rawOriginal": 48,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "priced", "isFree": false,
+      "packageName": "Stardew Valley", "storeUrlPath": "/app/413150"
+    },
+    {
+      "appid": 570, "name": "Dota 2", "nameEn": "Dota 2",
+      "ownerSteamIds": ["76561190000000004", "76561190000000005"], "ownerCount": 2, "playtimeForever": 0,
+      "playedBy": ["76561190000000005", "76561190000000006"],
+      "playtime": { "76561190000000005": 360000, "76561190000000006": 7200 },
+      "price": 0, "originalPrice": 0, "currentPrice": 0, "rawOriginal": 0,
+      "currency": "CNY", "region": "cn", "regionLabel": "国区", "discountPct": 0,
+      "shareable": true, "priceState": "free", "isFree": true,
+      "packageName": "Dota 2", "storeUrlPath": "/app/570"
+    }
+  ],
+  "playtimeAvailable": true,
+  "priceMeta": { "source": "fixture", "degraded": false, "warnings": [], "rates": {} }
+}

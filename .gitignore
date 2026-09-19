@@ -1,0 +1,43 @@
+# 依赖（本项目零运行时依赖，jsdom 只用于可选的前端测试）
+node_modules/
+
+# 缓存 —— 本项目把缓存写在**系统用户级缓存目录**（落点见 README），不在工程目录里。
+#   这两条只防「工程目录里出现缓存副本」时被误提交，别把它当成唯一防线。
+.cache/
+data-cache/
+
+# 本地配置 / 密钥 —— 永远不要把 key 提交上去
+config.json
+.env
+.env.*
+*.local
+
+# 编辑器 / AI 助手的工作目录，不属于项目本身
+.workbuddy/
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# 报告产物 —— 由 steam-family.js 生成，随时可重建，不进 git。
+# ★ 它们里面是**组里真人的身份信息 + 整份游戏库**，别打包外发、别提交。
+# ★ 默认名是 steam-family-report.html，但 --out 允许改成**任意名字**
+#   （family.html / 报告.html / …），所以这里用「*.html + 白名单放行」一次盖住所有命名。
+#   ⚠ 下面两条放行必须留在 *.html 之后：gitignore 里后面的规则会覆盖前面的，
+#     顺序写反 = index.html 被忽略 = 页面模板直接丢失。tests/docs.test.js 有闸门钉着。
+*.html
+!index.html
+!report-sample.html
+
+# 上面两行放行的理由：
+#   index.html        —— 页面模板（src/static-report.js 往它里面注入数据）
+#   report-sample.html —— 拿 tests/fixtures 那份合成数据生成的对外示例，故意进仓库
+
+# 测试用的临时产物（必须在仓库内，因为 --from/--out 只允许当前目录）
+tests/.tmp/
+
+# npm 的 lock 文件不进仓库：本项目零运行时依赖，装一下也只是为了跑前端冒烟测试；
+# 而 lock 里的 registry.npmjs.org 会被发布闸门的出网域名白名单拦下（见 tests/docs.test.js）。
+package-lock.json

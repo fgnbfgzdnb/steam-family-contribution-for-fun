@@ -1,0 +1,16 @@
+# 统一用 LF 换行（跨平台协作时避免 CRLF 污染 shell 脚本等，否则在 Linux 上会出现
+# 难以排查的 "bad interpreter" 报错）。
+* text=auto eol=lf
+
+# 二进制别乱转
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Windows 专用的批处理保持 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

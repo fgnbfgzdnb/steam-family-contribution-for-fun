@@ -1,0 +1,20 @@
+# Dependabot —— 只盯 GitHub Actions 的版本，不碰 npm。
+#
+# 为什么不配 npm：
+#   · 本项目**零运行时依赖**，唯一的 devDependency（jsdom）只在可选的前端测试里用；
+#   · package-lock.json 是**刻意不入库**的 —— 它里面的 registry.npmjs.org 会被发布闸门
+#     的出网域名白名单拦下（见 tests/docs.test.js「出网目标只能是 Steam 与汇率源」）。
+#   让 Dependabot 去管 npm，它会顺手把 lock 文件带进仓库，等于用外部工具撞自己的闸门。
+#
+# Actions 这边没有这个矛盾：全仓只有 actions/checkout 与 actions/setup-node 两个，
+# 版本落后了值得提个 PR，且完全不动 npm 世界。
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "dependencies"

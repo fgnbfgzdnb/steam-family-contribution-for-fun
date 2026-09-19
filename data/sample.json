@@ -1,0 +1,26 @@
+{
+  "_comment": "命令行样例数据：node cli.js data/sample.json。价格为无折扣原价（元），shareable 表示是否支持 Steam 家庭共享。",
+  "members": [
+    { "id": "m1", "name": "阿肯" },
+    { "id": "m2", "name": "老王" },
+    { "id": "m3", "name": "小林" },
+    { "id": "m4", "name": "Momo" },
+    { "id": "m5", "name": "阿七" },
+    { "id": "m6", "name": "大熊" }
+  ],
+  "games": [
+    { "id": "g01", "appid": 2358720, "name": "黑神话：悟空", "price": 268, "ownerIds": ["m1"], "shareable": true },
+    { "id": "g02", "appid": 1245620, "name": "艾尔登法环", "price": 298, "ownerIds": ["m1", "m2"], "shareable": true },
+    { "id": "g03", "appid": 1091500, "name": "赛博朋克 2077", "price": 298, "ownerIds": ["m2", "m3", "m4"], "shareable": true },
+    { "id": "g04", "appid": 1086940, "name": "博德之门 3", "price": 298, "ownerIds": ["m1", "m3"], "shareable": true },
+    { "id": "g05", "appid": 289070, "name": "文明 6", "price": 220, "ownerIds": ["m1", "m2", "m4", "m6"], "shareable": true },
+    { "id": "g06", "appid": 292030, "name": "巫师 3：狂猎", "price": 199, "ownerIds": ["m1", "m2", "m3", "m4", "m5", "m6"], "shareable": true },
+    { "id": "g07", "appid": 1426210, "name": "双人成行", "price": 198, "ownerIds": ["m4", "m5"], "shareable": false },
+    { "id": "g08", "appid": 1174180, "name": "荒野大镖客 2", "price": 279, "ownerIds": ["m2"], "shareable": false },
+    { "id": "g09", "appid": 367520, "name": "空洞骑士", "price": 58, "ownerIds": ["m1", "m5", "m6"], "shareable": true },
+    { "id": "g10", "appid": 413150, "name": "星露谷物语", "price": 48, "ownerIds": ["m3", "m4", "m5", "m6"], "shareable": true },
+    { "id": "g11", "appid": 105600, "name": "泰拉瑞亚", "price": 42, "ownerIds": ["m5", "m6"], "shareable": true },
+    { "id": "g12", "appid": 550, "name": "求生之路 2", "price": 42, "ownerIds": ["m2", "m6"], "shareable": true },
+    { "id": "g13", "appid": 1203220, "name": "永劫无间", "price": 0, "ownerIds": ["m3", "m5"], "shareable": false }
+  ]
+}
