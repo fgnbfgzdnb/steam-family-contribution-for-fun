@@ -1,0 +1,519 @@
+/* Steam 家庭组贡献度 · 样式（浅色主题） */
+
+:root {
+  --bg: #f2f5f9;
+  --panel: #ffffff;
+  --panel-2: #f8fafc;
+  --border: #e2e8f0;
+  --border-2: #eef2f7;
+  --text: #16202c;
+  --text-2: #5a6b7d;
+  --text-3: #93a3b4;
+  --accent: #1a9fff;
+  --accent-dark: #0b78c9;
+  --accent-soft: #e9f4ff;
+  --shadow: 0 1px 2px rgba(16, 32, 48, .05), 0 8px 24px -12px rgba(16, 32, 48, .12);
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+/*
+ * hidden 属性必须永远生效。
+ * 浏览器的默认样式里 [hidden] 只是 display:none，而作者样式里任何 display
+ * 都会把它覆盖掉 —— 结果就是「明明设了 hidden，元素还盖在上面」。
+ * 这里用 !important 一劳永逸，避免以后再踩。
+ */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 650; }
+p { margin: 0; }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: .92em;
+}
+
+/* ---------------- 顶栏 ---------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/*
+ * 静态报告顶部的快照说明条。
+ * ★ 刻意不写 display —— 这个元素靠 HTML 的 hidden 属性控制显隐，
+ *   这里写任何 display 都会把它顶掉（见文件顶部的 [hidden] 说明）。
+ */
+.snapshot-bar {
+  margin: 16px 24px 0;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border: 1px solid #cfe6fb;
+  border-radius: var(--radius);
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.snapshot-bar b { color: var(--accent-dark); }
+
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  font-size: 22px;
+  background: linear-gradient(140deg, #1a3a5c, #2b6ea8);
+  border-radius: 11px;
+  box-shadow: var(--shadow);
+}
+.brand h1 { font-size: 17px; letter-spacing: .2px; }
+.brand .sub { font-size: 12.5px; color: var(--text-2); margin-top: 2px; }
+
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  transition: .15s;
+  white-space: nowrap;
+}
+.btn:hover { border-color: #c9d6e4; background: var(--panel-2); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ---------------- 规则条 ---------------- */
+
+.formula {
+  margin: 16px 24px 0;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border: 1px solid #cfe6fb;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: #234a6b;
+}
+.formula b { color: var(--accent-dark); }
+/* 「计分方式」切换（在「③ 贡献榜」卡片里） */
+.price-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  cursor: pointer;
+  user-select: none;
+}
+.price-mode .select { background: var(--panel); }
+/* 明细表的「展开更多」一行 */
+.more-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.more-row .hint { font-size: 12px; }
+.formula-body { margin: 5px 0 2px; }
+.formula-body p { margin: 3px 0; line-height: 1.65; }
+.formula-body code { background: rgba(26,159,255,.12); padding: 0 4px; border-radius: 3px; }
+
+main { padding: 16px 24px 48px; display: flex; flex-direction: column; gap: 16px; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  min-width: 0;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.card-head h2 { font-size: 14.5px; }
+.card-head .hint { font-size: 12px; color: var(--text-3); }
+
+.pill {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 1px 8px;
+  border-radius: 20px;
+  margin-left: 6px;
+}
+
+input[type="text"], input[type="number"], input:not([type]) {
+  font: inherit;
+  font-size: 13px;
+}
+
+/* ---------------- 成员 ---------------- */
+
+.member-list { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-2);
+  border-left: 3px solid var(--c, var(--accent));
+}
+.member .avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--c, var(--accent));
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.member .mname {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.member input:focus { box-shadow: 0 1px 0 var(--accent); }
+
+/* ---------------- 两栏 ---------------- */
+
+.cols {
+  display: grid;
+  /* 左边贡献榜（窄）· 右边逐游戏明细（宽，表格需要空间） */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 1080px) { .cols { grid-template-columns: 1fr; } }
+
+/* ---------------- 表格 ---------------- */
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+
+table { border-collapse: collapse; width: 100%; }
+
+.num { text-align: right; }
+
+.muted { color: var(--text-3); font-size: 12px; }
+
+/* ---------------- KPI ---------------- */
+
+.kpi {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.kpi-item {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 8px 10px;
+  min-width: 0;
+}
+.kpi-k { display: block; font-size: 11px; color: var(--text-3); }
+.kpi-v { font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------------- 贡献榜 ---------------- */
+
+.rank-list { display: flex; flex-direction: column; gap: 8px; }
+
+.rank-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--panel-2);
+  cursor: pointer;
+  transition: .15s;
+}
+.rank-item:hover { border-color: #cfe0f0; }
+.rank-head { display: flex; align-items: center; gap: 8px; }
+.rank-no {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #e8eef5;
+  color: var(--text-2);
+  flex: none;
+}
+.rank-item:nth-child(1) .rank-no { background: #fdf0d4; color: #a8760c; }
+.rank-name { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 净贡献（贡献 − 使用）：正=净输出，负=净白玩 */
+.rank-net { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 14px; color: #1f7a46; }
+.rank-net.neg { color: #c0392b; }
+
+/* 净贡献柱状图：以中线为 0，右侧画正值、左侧画负值 */
+.netbar {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: #e8eef5;
+  margin: 7px 0 6px;
+  overflow: hidden;
+}
+.netbar-mid {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: #c8d4e2;
+  z-index: 2;
+}
+.netfill {
+  position: absolute;
+  top: 0; bottom: 0;
+  display: block;
+  transition: width .35s cubic-bezier(.2,.8,.3,1);
+}
+.netfill.pos { left: 50%; border-radius: 0 4px 4px 0; }
+.netfill.neg { right: 50%; background: #e2624a; border-radius: 4px 0 0 4px; }
+
+.rank-meta { font-size: 11.5px; color: var(--text-2); }
+.rank-meta b { color: var(--text); }
+
+/* ---------------- 明细表 ---------------- */
+
+.data-table th, .data-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-2);
+  font-size: 12.5px;
+  text-align: left;
+}
+.data-table thead th {
+  background: var(--panel-2);
+  font-size: 11.5px;
+  color: var(--text-2);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: #fbfdff; }
+
+/* ---------------- 其它 ---------------- */
+
+.empty {
+  color: var(--text-3);
+  font-size: 12.5px;
+  padding: 10px 2px;
+  margin: 0;
+}
+.issues { display: flex; flex-direction: column; gap: 6px; margin: 0 24px 16px; }
+.issue {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  background: #fff8e6;
+  border: 1px solid #f2e0b5;
+  color: #7a5a11;
+}
+.issue.error { background: #fdeeed; border-color: #f3c8c4; color: #9c3327; }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: #cfdae6; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #b6c6d8; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ================= 选项控件（下拉行 / 复选框） ================= */
+
+.steam-opts { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; }
+.opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  cursor: pointer;
+  user-select: none;
+}
+.opt.small { font-size: 11.5px; }
+.opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.opt span {
+  width: 16px; height: 16px;
+  border: 1.5px solid #cbd8e5;
+  border-radius: 4px;
+  background: #fff;
+  display: inline-block;
+  position: relative;
+  flex: none;
+  transition: .12s;
+}
+.opt:hover span { border-color: var(--accent); }
+.opt input:checked + span { background: var(--accent); border-color: var(--accent); }
+.opt input:checked + span::after {
+  content: "";
+  position: absolute;
+  left: 4.5px; top: 1px;
+  width: 4px; height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg);
+}
+.opt input:focus-visible + span { box-shadow: 0 0 0 3px rgba(26,159,255,.2); }
+
+/* 「计分方式」右侧的说明文字（两种口径都算好了） */
+
+.opt-note {
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin-left: auto;
+  align-self: center;
+}
+
+.formula-note { margin-top: 6px; font-size: 12.5px; color: #234a6b; opacity: .92; }
+
+/* ================= 成员头像 ================= */
+
+.member .avatar { position: relative; overflow: hidden; flex: none; }
+.member .avatar i {
+  font-style: normal;
+  display: grid;
+  place-items: center;
+  width: 100%; height: 100%;
+}
+.member .avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.member .sid {
+  font-size: 10.5px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.2px;
+}
+
+/* ================= 表头工具 / 徽标 ================= */
+
+.head-tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.btn.small { font-size: 12px; padding: 4px 10px; }
+
+.kpi-note {
+  grid-column: 1 / -1;
+  font-size: 11.5px;
+  color: var(--text-2);
+  background: #fff8e6;
+  border: 1px solid #f2e0b5;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-top: 2px;
+}
+
+/* 游戏名：中文名为主，英文名小字注在下面 */
+.data-table .name-cn { display: block; }
+.data-table .name-en {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-3);
+  line-height: 1.45;
+  margin-top: 1px;
+  word-break: break-word;
+}
+
+.data-table .appid {
+  margin-left: 6px;
+  font-size: 10.5px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+.data-table .num .sub { display: block; font-size: 10.5px; color: var(--text-3); line-height: 1.4; }
+
+/* 使用者：名字 + 游玩时长 */
+.data-table .players { line-height: 1.9; }
+.data-table .player {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  background: #eef7f1;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin: 1px 3px 1px 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.data-table .player em {
+  font-style: normal;
+  font-size: 10.5px;
+  color: #2f6b1f;
+}
+
+.rank-head .avatar {
+  position: relative;
+  overflow: hidden;
+  width: 22px; height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+.rank-head .avatar i { font-style: normal; }
+.rank-head .avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ================= 通用补充 ================= */
+
+.select {
+  font: inherit;
+  font-size: 11.5px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  max-width: 260px;
+}
+.select:focus { border-color: var(--accent); }
+
+.line-hint { font-size: 12px; color: var(--text-3); margin: -6px 0 12px; }

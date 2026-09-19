@@ -1,0 +1,8 @@
+# 关掉空白 issue：这个项目需要能复现的信息（版本 / Node / 系统 / 步骤），
+# 空模板只会让双方多一轮来回。
+blank_issues_enabled: false
+
+contact_links:
+  - name: 安全漏洞（请不要开公开 issue）
+    url: https://github.com/fgnbfgzdnb/steam-family-contribution-for-fun/security/policy
+    about: 私密报告渠道与「哪些不算漏洞」见 SECURITY.md

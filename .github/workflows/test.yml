@@ -1,0 +1,48 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# 最小权限：这个 workflow 只需要读代码，不需要写任何东西
+permissions:
+  contents: read
+
+jobs:
+  # 发布闸门 + 计算内核：零依赖、全离线，所以旧 Node 上也能跑 ——
+  # 这个矩阵同时验证 package.json 里 engines 的承诺（>= 18）。
+  gate:
+    name: gate (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: node 版本
+        run: node -v
+      # 不需要 npm install：这一整套测试是零依赖的
+      - run: npm test
+
+  # 报告渲染那两套需要 jsdom，而 devDependencies 里 jsdom 的 engines 要求比 18 高，
+  # 所以单独一个 job 跑，不混进上面的矩阵（否则 18 那一格会因为装不上 jsdom 而红）。
+  report:
+    name: report (jsdom)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: node 版本
+        run: node -v
+      - run: npm test
+      - run: npm install --no-audit --no-fund
+      - run: npm run test:ui
+      - run: npm run test:report

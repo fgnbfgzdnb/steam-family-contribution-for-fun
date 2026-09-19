@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ★ CSP 只卡 connect-src：页面里**没有任何网络调用**（有单测钉着），所以
+     connect-src 'none' 不可能弄坏任何功能，却能掐掉「万一有注入就把数据外带出去」这条路。
+     刻意不加 default-src 'none' 那一整套：内联脚本/样式、blob 导出、头像 CDN 都要逐个放行，
+     而那些只能靠真浏览器逐个点一遍来验，离线测试（jsdom 不执行 CSP）验不了。 -->
+<meta http-equiv="Content-Security-Policy" content="connect-src 'none'">
+<title>Steam 家庭组 · 游戏贡献度</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">&#127918;</span>
+    <div>
+      <h1>Steam 家庭组 · 游戏贡献度</h1>
+      <p class="sub">按「当前国区价格」把家庭组共享收益折算成每个人的贡献分</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn" data-act="export">导出 JSON</button>
+  </div>
+</header>
+
+<!-- 快照说明条：只在生成的报告里显示（直接打开模板时永远 hidden） -->
+<div class="snapshot-bar" id="snapshotBar" hidden></div>
+
+<div class="formula">
+  <b>计分规则</b>
+  <div class="formula-body">
+    <p><b>① 贡献</b>：某款游戏当前国区价格为 <code>P</code>，家庭组里 <code>O</code> 人拥有它，另有 <code>M</code> 位「非拥有者」实际玩过 —— 这款游戏就为家庭组提供了 <code>M × P</code> 的共享价值，由这 <code>O</code> 位拥有者均分，每人记 <code>M × P ÷ O</code> 分。<b>没人玩过就不计分</b>（不按「谁买了」算）。</p>
+    <p><b>② 使用</b>：你玩了别人拥有的游戏，就按同样的价格计入你的「使用」—— 也就是你白玩到了多少。</p>
+    <p><b>净贡献 = 贡献 − 使用</b>：正数表示你净往外掏，负数表示你净白玩别人的。贡献榜按这个值从高到低排，并用柱状图左右展示。</p>
+  </div>
+  <div class="formula-note">价格用的是<b>当前国区售价</b>，会随打折变动 —— 这份报告取的是<b>生成它的那一刻</b>的价。</div>
+  <div class="formula-note">无人拥有 / 免费游戏 / <b>不支持家庭共享的游戏</b> / 全员拥有 / 没人玩过 —— 一律记 0 分，它们都没有向家庭组输出共享价值。</div>
+</div>
+
+<div class="issues" id="issues" hidden></div>
+
+<main>
+
+  <!-- ② 家庭成员 -->
+  <section class="card">
+    <div class="card-head">
+      <h2>② 家庭组成员<span class="pill" id="memberCount">0 / 6</span></h2>
+      <span class="hint">来自 Steam 家庭组接口</span>
+    </div>
+    <div class="member-list" id="memberList"></div>
+  </section>
+
+  <div class="cols">
+
+    <!-- ③ 贡献榜（左窄） -->
+    <section class="card rank-card">
+      <div class="card-head">
+        <h2>③ 贡献榜</h2>
+        <span class="hint">贡献 − 使用，负数表示净白玩</span>
+      </div>
+      <div class="steam-opts">
+        <label class="price-mode" for="priceMode">
+          计分方式
+          <select id="priceMode" class="select">
+            <option value="final">折扣价（当前在售价）</option>
+            <option value="original">标价（无折扣原价）</option>
+          </select>
+        </label>
+        <span class="opt-note" id="priceModeNote">两种口径都算好了，切换即时生效</span>
+      </div>
+      <div class="kpi" id="kpi"></div>
+      <div class="rank-list" id="rankList"></div>
+    </section>
+
+    <!-- ④ 逐游戏价值明细（右宽） -->
+    <section class="card">
+      <div class="card-head">
+        <h2>④ 逐游戏价值明细<span class="pill" id="gameCount">0</span></h2>
+        <div class="head-tools">
+          <select id="filterOwner" class="select" title="只看某个人提供（拥有）的游戏">
+            <option value="">提供者：全部</option>
+          </select>
+          <select id="filterPlayer" class="select" title="只看某个人玩过的别人拥有的游戏">
+            <option value="">使用者：全部</option>
+          </select>
+          <select id="sortMode" class="select">
+            <option value="contribution">提供的价值高 → 低</option>
+            <option value="owners">拥有人数少 → 多，同人数价格高 → 低</option>
+            <option value="price">价格高 → 低</option>
+            <option value="name">按名称</option>
+          </select>
+          <label class="opt small"><input type="checkbox" id="onlyValuable" checked><span></span>只看有价值的</label>
+          <label class="opt small"><input type="checkbox" id="onlyShared"><span></span>只看多人共有</label>
+          <label class="opt small"><input type="checkbox" id="hideFree"><span></span>隐藏免费/无价</label>
+        </div>
+      </div>
+      <p class="hint line-hint" id="gridHint">
+        所有权、使用者与游玩时长均来自 Steam 接口。
+      </p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>游戏</th>
+              <th>拥有者</th>
+              <th>使用者（游玩时间）</th>
+              <th class="num">单份贡献</th>
+              <th class="num">项目总贡献</th>
+            </tr>
+          </thead>
+          <tbody id="valueBody"></tbody>
+        </table>
+      </div>
+      <div class="more-row">
+        <button class="btn small" id="detailMore" data-act="detail-more" hidden>展开更多（+50）</button>
+        <span class="hint" id="detailMoreHint"></span>
+      </div>
+    </section>
+
+  </div>
+
+</main>
+
+<!-- 页面数据全部来自 Steam 接口：没有手工编辑入口，也没有卡片弹层 -->
+<script src="src/engine.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

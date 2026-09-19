@@ -1,0 +1,20 @@
+# 跨编辑器统一约定 —— 让 diff 干净，别让"整文件换行符变了"这种噪声混进 PR。
+# 权威的换行符策略在 .gitattributes（那边管的是进 git 的内容，
+# 这里管的是你编辑器里敲出来的东西）。
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown 的行尾空格是有意义的（表示换行），别自动删掉
+[*.md]
+trim_trailing_whitespace = false
+
+# Windows 专用的批处理保持 CRLF
+[*.{bat,cmd}]
+end_of_line = crlf

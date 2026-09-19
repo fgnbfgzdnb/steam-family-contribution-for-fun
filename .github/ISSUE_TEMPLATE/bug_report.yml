@@ -1,0 +1,63 @@
+name: Bug 报告
+description: 报告一个可复现的问题
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **先看一眼**：这个工具会读到家庭组成员的真实 Steam 资料。
+
+        贴日志或截图之前，请把 `access_token`、SteamID、个人主页链接、
+        以及报告里出现的人物昵称**全部涂掉** —— 连你自己觉得"无所谓"的也别漏。
+
+        要报告**安全问题**，请不要走这里，见仓库根目录的 `SECURITY.md`。
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本
+      description: '`package.json` 里的 version，或 `git rev-parse --short HEAD` 的输出'
+      placeholder: v1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node 版本
+      description: '`node -v` 的输出。运行时要求 >= 18；跑前端冒烟测试需要更高版本（见 CONTRIBUTING.md）'
+      placeholder: v22.22.2
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: 操作系统
+      placeholder: Windows 11 / macOS 14 / Ubuntu 24.04
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 期望发生什么 / 实际发生了什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      description: 完整的命令与输出。★ 提交前再检查一遍，别把 token 或真实 Steam 资料带进来
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其它补充
+      description: 可选。比如你已经排查过哪些环节
+    validations:
+      required: false

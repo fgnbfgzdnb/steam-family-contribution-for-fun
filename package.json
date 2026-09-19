@@ -1,0 +1,48 @@
+{
+  "name": "steam-family-contribution",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Steam 家庭组游戏贡献度计算器 —— 按当前国区价格（默认折扣价，可切标价）把共享收益折算成每个人的贡献分，输出自包含单文件报告。只需要一个 access_token，不需要任何 Web API Key。零运行时依赖。",
+  "type": "commonjs",
+  "main": "src/engine.js",
+  "bin": {
+    "steam-family": "steam-family.js"
+  },
+  "scripts": {
+    "cli": "node cli.js",
+    "check": "node tools/check.js",
+    "test": "node tests/engine.test.js && node tests/steam.test.js && node tests/payload.test.js && node tests/entry.test.js && node tests/docs.test.js",
+    "test:engine": "node tests/engine.test.js",
+    "test:steam": "node tests/steam.test.js",
+    "test:payload": "node tests/payload.test.js",
+    "test:entry": "node tests/entry.test.js",
+    "test:docs": "node tests/docs.test.js",
+    "test:ui": "node tests/ui.smoke.js",
+    "test:report": "node tests/static-report.test.js",
+    "report": "node steam-family.js",
+    "report:html": "node tools/family-report.js --html family-report.html",
+    "report:sample": "node tools/family-report.js --from tests/fixtures/family-api-sample.json --html report-sample.html"
+  },
+  "keywords": [
+    "steam",
+    "steam-families",
+    "family-sharing",
+    "contribution",
+    "cli",
+    "offline-report"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.0"
+  },
+  "license": "MIT",
+  "author": "供电所最强一号位maple本人",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fgnbfgzdnb/steam-family-contribution-for-fun.git"
+  },
+  "homepage": "https://github.com/fgnbfgzdnb/steam-family-contribution-for-fun#readme",
+  "bugs": "https://github.com/fgnbfgzdnb/steam-family-contribution-for-fun/issues"
+}
