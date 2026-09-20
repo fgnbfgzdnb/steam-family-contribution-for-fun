@@ -1,6 +1,6 @@
 {
   "name": "steam-family-contribution",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Steam 家庭组游戏贡献度计算器 —— 按当前国区价格（默认折扣价，可切标价）把共享收益折算成每个人的贡献分，输出自包含单文件报告。只需要一个 access_token，不需要任何 Web API Key。零运行时依赖。",
   "type": "commonjs",
